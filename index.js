@@ -33,6 +33,10 @@ con.connect(function(err) {
     console.log("Connected to joga_mysql db")
 })
 
+const articleRoutes = require('./routes/article');
+app.use('/', articleRoutes);
+app.use('/article', articleRoutes);
+
 app.get('/', (req, res) => {
     let query = "SELECT * FROM article";
     let articles = []
@@ -49,6 +53,7 @@ app.get('/article/:slug', (req, res) => {
     con.query(query, (err, result) => {
         if (err) throw err;
         article = result[0];
+        console.log(article);
         res.render('article', { article: article })
     })
 });
